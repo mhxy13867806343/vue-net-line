@@ -1,0 +1,331 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+  background-color: #f5f5f5;
+  color: #333;
+}
+
+#app {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+.metro-container {
+  width: 100%;
+  max-width: 1200px;
+  background-color: #00447c;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.station-info {
+  position: absolute;
+  background-color: white;
+  border-radius: 4px;
+  padding: 12px 15px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  z-index: 10;
+  min-width: 150px;
+  border: 1px solid #eee;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.5s ease;
+  transform: translateY(-10px);
+}
+
+.station-info.visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.fixed-top-right {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.station-name {
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 8px;
+  color: #333;
+}
+
+.station-lines {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+.station-line-tag {
+  padding: 3px 8px;
+  border-radius: 3px;
+  color: white;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.metro-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.logo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: white;
+}
+
+.metro-logo {
+  height: 60px;
+  margin-bottom: 10px;
+}
+
+h1 {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+h2 {
+  font-size: 18px;
+  font-weight: normal;
+}
+
+.metro-map-container {
+  background-color: white;
+  border-radius: 5px;
+  padding: 20px;
+  margin-bottom: 20px;
+  overflow: hidden;
+  height: auto;
+  position: relative;
+}
+
+.metro-map {
+  position: relative;
+  width: 100%;
+  min-height: 500px;
+  display: flex;
+  flex-direction: column;
+}
+
+.metro-line {
+  position: absolute;
+  z-index: 1;
+}
+
+.metro-station {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background-color: white;
+  border: 2px solid #333;
+  z-index: 2;
+  transform: translate(-50%, -50%);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.metro-station:hover {
+  transform: translate(-50%, -50%) scale(1.5);
+  z-index: 10;
+}
+
+.metro-station.transfer {
+  width: 16px;
+  height: 16px;
+  background-color: white;
+  border: 3px solid #333;
+}
+
+.metro-station.terminal {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background-color: white;
+  border: 3px solid #333;
+}
+
+.metro-station-circle.selected {
+  animation: pulse 1.5s infinite;
+  box-shadow: 0 0 0 5px rgba(255, 255, 255, 0.6);
+  z-index: 15;
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.7);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(255, 255, 255, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);
+  }
+}
+
+.station-label {
+  position: absolute;
+  font-size: 12px;
+  white-space: nowrap;
+  z-index: 3;
+  background-color: rgba(255, 255, 255, 0.8);
+  padding: 2px 4px;
+  border-radius: 2px;
+  transform: translate(-50%, -100%);
+  margin-top: -8px;
+  visibility: hidden;
+  opacity: 0;
+  transition: all 0.3s ease;
+}
+
+.metro-station:hover .station-label {
+  visibility: visible;
+  opacity: 1;
+}
+
+.metro-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  padding: 15px;
+  background-color: white;
+  border-radius: 5px;
+  margin-top: 20px;
+  border: 1px solid #ddd;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  margin-right: 15px;
+  cursor: pointer;
+  padding: 5px 10px;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+}
+
+.legend-item:hover {
+  background-color: #f0f0f0;
+}
+
+.legend-inactive {
+  opacity: 0.5;
+}
+
+.line-color {
+  width: 30px;
+  height: 10px;
+  margin-right: 8px;
+  border-radius: 2px;
+}
+
+.line-name {
+  font-size: 14px;
+  white-space: nowrap;
+}
+
+.legend-item.special {
+  display: flex;
+  align-items: center;
+}
+
+.station-icon {
+  width: 12px;
+  height: 12px;
+  margin-right: 8px;
+  border-radius: 50%;
+}
+
+.station-icon.transfer {
+  background-color: white;
+  border: 3px solid #333;
+  width: 14px;
+  height: 14px;
+}
+
+.station-icon.terminal {
+  background-color: white;
+  border: 3px solid #333;
+  width: 14px;
+  height: 14px;
+}
+
+.station-name {
+  font-size: 14px;
+}
+
+.compass {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  width: 60px;
+  height: 60px;
+  z-index: 5;
+  cursor: pointer;
+  transition: transform 0.5s ease;
+  user-select: none;
+  position: relative;
+}
+
+.compass:hover {
+  transform: scale(1.1);
+}
+
+.compass svg {
+  transition: all 0.5s ease;
+}
+
+.compass-tooltip {
+  position: absolute;
+  bottom: -20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: rgba(0, 0, 0, 0.7);
+  color: white;
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-size: 12px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  white-space: nowrap;
+}
+
+.compass:hover .compass-tooltip {
+  opacity: 1;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+  .metro-map-container {
+    height: 450px;
+  }
+  
+  .metro-legend {
+    flex-direction: column;
+  }
+  
+  .legend-item {
+    margin-bottom: 8px;
+  }
+}
